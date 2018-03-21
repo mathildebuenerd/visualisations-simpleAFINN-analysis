@@ -1,6 +1,26 @@
+let buttons = document.querySelectorAll('button');
+for (let i=0; i<buttons.length; i++) {
+    buttons[i].addEventListener('click', (e) => {
+        console.log(e);
+    });
+}
 
 let data = [];
-let scores = [];
+let students = [
+    {
+        name: 'Arthur',
+        color: '#00f'
+    },
+    {
+        name: 'Georges',
+        color: '#f0f'
+    },
+    {
+        name: 'Francois',
+        color: '#0ff'
+    }
+
+];
 
 /*****
  *
@@ -9,7 +29,7 @@ let scores = [];
  *  - on n'a pas la sentence complète quand on a le score / vote / mots négatifs-positifs
  *
  *  Exemple :
- *
+ *  
  -------
 
  {
@@ -36,47 +56,48 @@ let scores = [];
 
 
 function preload() {
-    let students = ['Arthur', 'Francois', 'Georges'];
+
     for (let i=0; i<3; i++) {
-        data[i] = loadJSON('../../data/' + students[i] + '-27.02.json');
+        data[i] = loadJSON('../../data/' + students[i].name + '-27.02.json');
     }
     console.log(data);
 }
 
 
-function showStudent(student) {
+function showStudent(studentIndex) {
 
-    let keys = Object.keys(data[student]);
+    let scores = [];
+
+    let currentData = data[studentIndex];
+
+    console.log(currentData);
+
+    let keys = Object.keys(currentData);
 
     for (let i=0; i<keys.length; i++) {
-        if (Object.keys(data[student][keys[i]]).includes('score')) { // on regarde si l'entrée contient un score (elle contient soit une sentence soit un score)
-            scores.push({score:data[student][keys[i]].score, negativeWords: data[student][keys[i]].negativeWords, positiveWords: data[student][keys[i]].positiveWords})
+        if (Object.keys(currentData[keys[i]]).includes('score')) { // on regarde si l'entrée contient un score (elle contient soit une sentence soit un score)
+            scores.push({score:currentData[keys[i]].score, negativeWords: currentData[keys[i]].negativeWords, positiveWords: currentData[keys[i]].positiveWords})
             // console.log(data[keys[i]].score);
         }
     }
+    console.log("scores");
     console.log(scores);
 
-    drawData();
+    drawData(studentIndex, scores);
 }
 
 
 
 function setup() {
     createCanvas(5000, windowHeight);
-
-    // stroke(255,0,0);
-    fill(0,0,255);
-
-    showStudent(1);
-
-    // console.log(Object.keys(data));
+    // fill(0,0,255);
 }
 
 function getData() {
 
 }
 
-function drawData() {
+function drawData(student, scores) {
 
     let coefX = 8;
     let coefY = 20; // les valeurs de y vont de -5 à 5 environ, on ne les verrait pas trop sinon
@@ -119,7 +140,7 @@ function drawData() {
             let previousX = (i-1)*coefX;
             let previouxY = scores[i-1].score*coefY+offsetY;
             strokeWeight(1);
-            stroke(255,0,0);
+            stroke(students[student].color);
             line(previousX, previouxY, x, y);
         }
     }
