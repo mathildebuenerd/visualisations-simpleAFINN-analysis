@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="p5" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/../p5/p5/p5.js" />
+        <item url="file://$PROJECT_DIR$/../p5/p5/empty-example/sketch.js" />
+        <item url="file://$PROJECT_DIR$/../p5/p5/addons/p5.dom.js" />
+        <item url="file://$PROJECT_DIR$/../p5/p5/addons/p5.sound.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../p5/p5/addons/p5.dom.min.js" />
+      <root url="file://$PROJECT_DIR$/../p5/p5/p5.min.js" />
+      <root url="file://$PROJECT_DIR$/../p5/p5/p5.js" />
+      <root url="file://$PROJECT_DIR$/../p5/p5/empty-example/sketch.js" />
+      <root url="file://$PROJECT_DIR$/../p5/p5/addons/p5.sound.min.js" />
+      <root url="file://$PROJECT_DIR$/../p5/p5/addons/p5.dom.js" />
+      <root url="file://$PROJECT_DIR$/../p5/p5/addons/p5.sound.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
