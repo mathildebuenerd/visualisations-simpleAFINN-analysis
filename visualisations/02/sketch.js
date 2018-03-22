@@ -24,7 +24,7 @@ let students = [
 
 /*****
  *
- *
+ * 
  *  Pour cette visualisation, la forme du fichier json est de ce type :
  *  - un identifiant unique par "phrase"
  *  - on n'a pas la sentence complète quand on a le score / vote / mots négatifs-positifs
@@ -112,27 +112,61 @@ function drawData(student, scores) {
         noStroke();
         ellipse(x, y, 3,3);
 
+        // ------------------------------------------------------------
+        //   s'il y en a, on affiche les mots responsables de ce score (positiveWords ou negativeWords)
+        // ------------------------------------------------------------
+        // On vérifie d'abord que ces mots ne sont pas undefined
+        // Puis si le score d'avant contenait des mots
+        // Puis si ces mots sont identiques
+        // comme on ne peut pas directement checker l'égalité entre deux arrays en javascript
+        // on teste uniquement le premier mot
 
-        // s'il y en a, on affiche les mots responsables de ce score
-        if (scores[i].positiveWords && scores[i].positiveWords !== scores[i-1].positiveWords) {
-            for (let j=0; j<scores[i].positiveWords.length; j++) {
-                let yText = offsetY + coefY*5 + int(random(-100, 0));
-                strokeWeight(0.2);
-                stroke(0);
-                line(x, y, x, yText);
-                noStroke();
-                text(scores[i].positiveWords[j], x, yText);
+
+        // Affichage des mots positifs
+        if (scores[i].positiveWords) {
+            if (scores[i-1].positiveWords) {
+                if (scores[i].positiveWords[0] !== scores[i-1].positiveWords[0]) {
+                    addWord('positive');
+                }
+            } else {
+                addWord('positive');
             }
         }
 
-        if (scores[i].negativeWords && scores[i].negativeWords !== scores[i-1].negativeWords) {
-            for (let j=0; j<scores[i].negativeWords.length; j++) {
-                let yText = offsetY - coefY*5 + int(random(0, 100));
-                strokeWeight(0.2);
-                stroke(0);
-                line(x, y, x, yText);
-                noStroke();
-                text(scores[i].negativeWords[j], x, yText);
+        // Affichage des mots négatifs
+        if (scores[i].negativeWords) {
+            if (scores[i-1].negativeWords) {
+                if (scores[i].negativeWords[0] !== scores[i-1].negativeWords[0]) {
+                    addWord('negative');
+                }
+            } else {
+                addWord('negative');
+            }
+        }
+
+        function addWord(valence) {
+            if (valence === 'positive') {
+                for (let j=0; j<scores[i].positiveWords.length; j++) { // 'positiveWords' est un tableau avec potentiellement plusieurs mots donc il faut le parcourir
+                    let yText = offsetY + coefY*5 + int(random(-100, 0)); // la position y du texte est random pour éviter les superpositions de mots
+                    strokeWeight(0.2);
+                    stroke(students[student].color);
+                    line(x, y, x, yText);
+                    noStroke();
+                    fill(students[student].color);
+                    text(scores[i].positiveWords[j], x, yText);
+                }
+            }
+
+            if (valence === 'negative') {
+                for (let j=0; j<scores[i].negativeWords.length; j++) {
+                    let yText = offsetY - coefY*5 + int(random(0, 100));
+                    strokeWeight(0.2);
+                    stroke(students[student].color);
+                    line(x, y, x, yText);
+                    noStroke();
+                    fill(students[student].color);
+                    text(scores[i].negativeWords[j], x, yText);
+                }
             }
         }
 
